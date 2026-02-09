@@ -4,7 +4,7 @@ import { StepIndicator } from './components/StepIndicator';
 import { QuestionCard } from './components/QuestionCard';
 import { ImageCropModal } from './components/ImageCropModal';
 import { parseQuestionsWithGemini } from './services/geminiService';
-import { extractTextFromPDF, convertPDFToImages, PDFPageImage } from './services/pdfService';
+import { extractTextFromPDF } from './services/pdfService';
 import { log } from './services/logService';
 import { createExportZip, downloadBlob, uploadImagesToFirebaseAndCreateJSON, uploadDataToMongoDB } from './services/exportService';
 import { FileText, UploadCloud, Play, Database, Loader2, Download, Clock, Info, CheckCircle2 } from 'lucide-react';
@@ -53,11 +53,8 @@ function App() {
         setIsProcessing(true);
         setError(null);
         try {
-            let input: string | PDFPageImage[] = rawText;
-            if (sourceFile && sourceFile.type === 'application/pdf') {
-                input = await convertPDFToImages(sourceFile);
-            }
-            const parsed = await parseQuestionsWithGemini(input, sourceName);
+            // Always use text-only processing (no images sent to Gemini)
+            const parsed = await parseQuestionsWithGemini(rawText, sourceName);
             setQuestions(parsed);
             setCurrentStep(IngestionStep.REVIEW);
         } catch (err: any) {
