@@ -1,0 +1,5 @@
+{
+  "name": "JEE Ingest Pro",
+  "description": "A production-grade React dashboard for ingesting, parsing, and classifying JEE Main & Advanced questions using Gemini AI, enforcing strict schema compliance.",
+  "requestFramePermissions": []
+}
